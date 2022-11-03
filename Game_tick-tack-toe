@@ -1,0 +1,199 @@
+package tictactoe;
+
+
+
+//package tictactoe;
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        char[][] arr = new char[5][9];
+        String string = "";
+        int field = 0;
+        char[][] arr2 = new char[3][3];
+        boolean end = false;
+        int X = 0;
+        int O = 0;
+
+        for (int i = 0; i < 5; i++) {
+            for (int a = 0; a < 9; a++) {
+                if (i == 0 || i == 4) {
+                    arr[i][a] = '-';
+                    System.out.print(arr[i][a]);
+                } else if ((i > 0 && i < 4) && ((a == 0) || (a == 8))) {
+                    if (a == 0) {
+                        arr[i][a] = '|';
+                        System.out.print(arr[i][a]);
+                        arr[i][++a] = ' ';
+                        System.out.print(arr[i][a]);
+                    } else if (a == 8) {
+                        arr[i][a] = '|';
+                        System.out.print(arr[i][a]);
+                    }
+                } else {
+
+                    arr[i][a] = ' ';
+                    System.out.print(arr[i][a]);
+                    field++;
+                    arr[i][++a] = ' ';
+                    System.out.print(arr[i][a]);
+                }
+
+            }
+
+            System.out.println();
+        }
+
+        for(int a=0; a < 3; a++)
+            for(int i = 0; i<3;i++)
+                arr2[a][i]= '_';
+
+        boolean info = false;
+        char char1 = ' ', char2 = ' ';
+        int c, d;
+        boolean game = true;
+        string = "_________";
+        String string2 = "";
+        boolean XO = true;
+        while(game == true) {
+            info = false;
+
+
+            while (info == false) {
+                char1 = scanner.next().charAt(0);
+                char2 = scanner.next().charAt(0);
+                if (char2 >= '9' || char2 <= '0' || char1 >= '9' || char1 <= '0') {
+                    System.out.println("You should enter numbers!");
+
+                } else if (char1 < '1' || char1 > '3' || char2 < '1' || char2 > '3') {
+                    System.out.println("Coordinates should be from 1 to 3!");
+
+                }
+                 else  {
+
+
+                    c = Character.getNumericValue(char1);
+                    d = Character.getNumericValue(char2);
+                    boolean info2 = false;
+                    field = 0;
+                    StringBuilder myString = new StringBuilder(string);
+
+                    for (int i = 1; i < 4; i++)
+                        for (int e = 1; e < 4; e++) {
+                            if (c == i && d == e) {
+                                if (arr2[i - 1][e - 1] == 'X' || arr2[i - 1][e - 1] == 'O') {
+                                    System.out.println("This cell is occupied! Choose another one!");
+
+                                }
+                                else {
+                                    if(XO == true) {
+                                        arr2[i - 1][e - 1] = 'X';
+                                        myString.setCharAt(field, 'X');
+                                        string = myString.toString();
+                                        field++;
+                                        XO = false;
+                                        info = true;
+                                    }
+                                    else{
+                                        arr2[i - 1][e - 1] = 'O';
+                                        myString.setCharAt(field, 'O');
+                                        string = myString.toString();
+                                        field++;
+                                        XO = true;
+                                        info = true;
+                                    }
+                                }
+
+                            } else {
+
+                                field++;
+                            }
+                        }
+
+                }
+
+            }
+
+
+
+            field = 0;
+            for (int i = 0; i < 5; i++) {
+                for (int a = 0; a < 9; a++) {
+                    if (i == 0 || i == 4) {
+                        arr[i][a] = '-';
+                        System.out.print(arr[i][a]);
+                    } else if ((i > 0 && i < 4) && ((a == 0) || (a == 8))) {
+                        if (a == 0) {
+                            arr[i][a] = '|';
+                            System.out.print(arr[i][a]);
+                            arr[i][++a] = ' ';
+                            System.out.print(arr[i][a]);
+                        } else if (a == 8) {
+                            arr[i][a] = '|';
+                            System.out.print(arr[i][a]);
+                        }
+                    } else {
+
+                        arr[i][a] = string.charAt(field);
+                        System.out.print(arr[i][a]);
+                        field++;
+                        a++;
+                        arr[i][a] = ' ';
+                        System.out.print(arr[i][a]);
+                    }
+
+                }
+
+                System.out.println();
+            }
+            X = 0;
+            O = 0;
+            end = false;
+            for(int i = 0; i < 3 ; i++) {
+                for (int a = 0; a < 3; a++) {
+                    if(arr2[i][a] == '_')
+                        end = true;
+                    if(arr2[i][a] == 'X')
+                        X++;
+                    if(arr2[i][a] == 'O')
+                        O++;
+                }
+            }
+
+
+             if(((arr2[0][0] == 'X' && arr2[0][1] == 'X' && arr2[0][2] == 'X') ||(arr2[1][0] == 'X' && arr2[1][1] == 'X' && arr2[1][2] == 'X') || (arr2[2][0] == 'X' && arr2[2][1] == 'X' && arr2[2][2] == 'X')||
+                    (arr2[0][0] == 'X' && arr2[1][1] == 'X' && arr2[2][2] == 'X') || (arr2[0][0] == 'X' && arr2[1][0] == 'X' && arr2[2][0] == 'X') || (arr2[0][1] == 'X' && arr2[1][1] == 'X' && arr2[2][1] == 'X') ||
+                    (arr2[0][2] == 'X' && arr2[1][2] == 'X' && arr2[2][2] == 'X') ||(arr2[0][2] == 'X' && arr2[1][1] == 'X' && arr2[2][0] == 'X')) && ((arr2[0][0] == 'O' && arr2[0][1] == 'O' && arr2[0][2] == 'O') ||(arr2[1][0] == 'O' && arr2[1][1] == 'O' && arr2[1][2] == 'O') || (arr2[2][0] == 'O' && arr2[2][1] == 'O' && arr2[2][2] == 'O')||
+                    (arr2[0][0] == 'O' && arr2[1][1] == 'O' && arr2[2][2] == 'O') || (arr2[0][0] == 'O' && arr2[1][0] == 'O' && arr2[2][0] == 'O') || !(arr2[0][1] == 'O' && arr2[1][1] == 'O' && arr2[2][1] == 'O') ||
+                    (arr2[0][2] == 'O' && arr2[1][2] == 'O' && arr2[2][2] == 'O') ||(arr2[0][2] == 'O' && arr2[1][1] == 'O' && arr2[2][0] == 'O')))
+            {
+                System.out.println("X wins"); game = false;
+            }
+            else if(((arr2[0][0] == 'O' && arr2[0][1] == 'O' && arr2[0][2] == 'O') ||(arr2[1][0] == 'O' && arr2[1][1] == 'O' && arr2[1][2] == 'O') || (arr2[2][0] == 'O' && arr2[2][1] == 'O' && arr2[2][2] == 'O')||
+                    (arr2[0][0] == 'O' && arr2[1][1] == 'O' && arr2[2][2] == 'O') || (arr2[0][0] == 'O' && arr2[1][0] == 'O' && arr2[2][0] == 'O') || (arr2[0][1] == 'O' && arr2[1][1] == 'O' && arr2[2][1] == 'O') ||
+                    (arr2[0][2] == 'O' && arr2[1][2] == 'O' && arr2[2][2] == 'O') ||(arr2[0][2] == 'O' && arr2[1][1] == 'O' && arr2[2][0] == 'O')) && !((arr2[0][0] == 'X' && arr2[0][1] == 'X' && arr2[0][2] == 'X') ||(arr2[1][0] == 'X' && arr2[1][1] == 'X' && arr2[1][2] == 'X') || (arr2[2][0] == 'X' && arr2[2][1] == 'X' && arr2[2][2] == 'X')||
+                    (arr2[0][0] == 'X' && arr2[1][1] == 'X' && arr2[2][2] == 'X') || (arr2[0][0] == 'X' && arr2[1][0] == 'X' && arr2[2][0] == 'X') || (arr2[0][1] == 'X' && arr2[1][1] == 'X' && arr2[2][1] == 'X') ||
+                    (arr2[0][2] == 'X' && arr2[1][2] == 'X' && arr2[2][2] == 'X') ||(arr2[0][2] == 'X' && arr2[1][1] == 'X' && arr2[2][0] == 'X'))){
+                System.out.println("O wins"); game = false;
+            }
+            else if(((arr2[0][0] == 'X' && arr2[0][1] == 'X' && arr2[0][2] == 'X') ||(arr2[1][0] == 'X' && arr2[1][1] == 'X' && arr2[1][2] == 'X') || (arr2[2][0] == 'X' && arr2[2][1] == 'X' && arr2[2][2] == 'X')||
+                    (arr2[0][0] == 'X' && arr2[1][1] == 'X' && arr2[2][2] == 'X') || (arr2[0][0] == 'X' && arr2[1][0] == 'X' && arr2[2][0] == 'X') || (arr2[0][1] == 'X' && arr2[1][1] == 'X' && arr2[2][1] == 'X') ||
+                    (arr2[0][2] == 'X' && arr2[1][2] == 'X' && arr2[2][2] == 'X') ||(arr2[0][2] == 'X' && arr2[1][1] == 'X' && arr2[2][0] == 'X')) && ((arr2[0][0] == 'O' && arr2[0][1] == 'O' && arr2[0][2] == 'O') ||(arr2[1][0] == 'O' && arr2[1][1] == 'O' && arr2[1][2] == 'O') || (arr2[2][0] == 'O' && arr2[2][1] == 'O' && arr2[2][2] == 'O')||
+                    (arr2[0][0] == 'O' && arr2[1][1] == 'O' && arr2[2][2] == 'O') || (arr2[0][0] == 'O' && arr2[1][0] == 'O' && arr2[2][0] == 'O') || (arr2[0][1] == 'O' && arr2[1][1] == 'O' && arr2[2][1] == 'O') ||
+                    (arr2[0][2] == 'O' && arr2[1][2] == 'O' && arr2[2][2] == 'O') ||(arr2[0][2] == 'O' && arr2[1][1] == 'O' && arr2[2][0] == 'O')) )
+            {
+                System.out.println("Impossible"); game = false;
+            }
+            else if(end == true) {
+                System.out.println("Game not finished");
+            }
+
+            else if(end == false){
+                System.out.println("Draw"); game = false;
+            }
+
+        }
+    }
+}
